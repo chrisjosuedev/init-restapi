@@ -1,21 +1,30 @@
 require('dotenv').config()
 const express = require("express");
-// https://www.npmjs.com/package/cors
-// Revisar CORS
 const cors = require('cors')
+
+const { dbConnection } = require('../db/config')
 
 class Server {
     constructor() {
+        // Basic Config
         this.app = express();
         this.port = process.env.PORT
+
+        // Connect to database
+        this.database()
+
         // Routes
         this.usersRoutePath = '/api/users'
 
         // Middlewares
         this.middlewares()
 
-        // Routes
+        // Init Routes
         this.routes()
+    }
+
+    async database() {
+        await dbConnection()
     }
 
     middlewares() {
