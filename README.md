@@ -7,11 +7,11 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app.
+Runs the rest api.
 
 ### `npm run dev`
 
-Runs the app in the development mode.
+Runs the rest api in the development mode.
 
 ### `npm i`
 Install node modules
