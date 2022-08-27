@@ -76,15 +76,11 @@ const postUsers = async (req = request, res = response) => {
 const deleteUsers = async (req = request, res = response) => {
     const { id } = req.params;
 
-    /* Phisically Delete
-    const user = await User.findByIdAndDelete(id)
-    */
-
     const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
 
     res.status(200).json({
         msg: "User was deleted successfully",
-        userDeleted: [user],
+        userDeleted: [user]
     });
 };
 
