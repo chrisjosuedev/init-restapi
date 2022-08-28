@@ -3,7 +3,7 @@ Basic Rest API Template
 
 ## Documentation
 
-You can view the documentation: https://documenter.getpostman.com/view/21748987/VUxKSUZ5
+You can review the documentation: https://documenter.getpostman.com/view/21748987/VUxKSUZ5
 
 ## Available Scripts
 
