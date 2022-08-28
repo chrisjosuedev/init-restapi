@@ -1,6 +1,8 @@
 # init-restapi
 Basic Rest API Template
 
+## View documentation: https://documenter.getpostman.com/view/21748987/VUxKSUZ5
+
 ## Available Scripts
 
 In the project directory, you can run:
