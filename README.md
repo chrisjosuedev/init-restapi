@@ -1,7 +1,9 @@
 # init-restapi
 Basic Rest API Template
 
-## View documentation: https://documenter.getpostman.com/view/21748987/VUxKSUZ5
+## Documentation
+
+You can view the documentation: https://documenter.getpostman.com/view/21748987/VUxKSUZ5
 
 ## Available Scripts
 
