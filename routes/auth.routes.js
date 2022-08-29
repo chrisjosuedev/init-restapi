@@ -3,7 +3,7 @@ const { check } = require("express-validator")
 const router = Router()
 
 const { login, googleSingIn } = require('../controllers/auth.controller')
-const { validateFields } = require('../middlewares/validate-fields')
+const { validateFields } = require('../middlewares')
 
 router.post('/login', [
     check("email", "email is required").isEmail(),

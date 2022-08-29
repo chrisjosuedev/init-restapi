@@ -35,7 +35,7 @@ const isAdminRole = (req = request, res = response, next) => {
     if (role !== "ADMIN_ROLE") {
         return res.status(401).json({
             ok: false,
-            msg: `${name} is not an admin`,
+            msg: `User ${name} is not an admin, You don't have permissions to complete this action`,
         });
     }
 
