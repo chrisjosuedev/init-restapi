@@ -1,4 +1,4 @@
-const { request, response } = require("express");
+const { request, response } = require('express');
 
 const verifyRole = (...roles) => {
     return (req = request, res = response, next) => {
@@ -6,7 +6,7 @@ const verifyRole = (...roles) => {
         if (!req.user) {
             return res.status(500).json({
                 ok: false,
-                msg: "Attempted to validate role without token verification",
+                msg: 'Attempted to validate role without token verification',
             });
         }
 
@@ -26,13 +26,13 @@ const isAdminRole = (req = request, res = response, next) => {
     if (!req.user) {
         return res.status(500).json({
             ok: false,
-            msg: "Attempted to validate role without token verification",
+            msg: 'Attempted to validate role without token verification',
         });
     }
 
     const { role, name } = req.user;
 
-    if (role !== "ADMIN_ROLE") {
+    if (role !== 'ADMIN_ROLE') {
         return res.status(401).json({
             ok: false,
             msg: `User ${name} is not an admin, You don't have permissions to complete this action`,

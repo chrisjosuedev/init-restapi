@@ -1,53 +1,52 @@
-const { request, response } = require("express");
-const jwt = require("jsonwebtoken");
+const { request, response } = require('express');
+const jwt = require('jsonwebtoken');
 
-const User = require("../models/user")
-
+const User = require('../models/user');
 
 const validateJWT = async (req = request, res = response, next) => {
-    const token = req.header("x-api-key")
+    const token = req.header('x-api-key');
 
     if (!token) {
         return res.status(401).json({
             ok: false,
-            msg: "Unauthorized"
-        })
+            msg: 'Unauthorized',
+        });
     }
 
     try {
-        const { uid } = jwt.verify(token, process.env.SECRET_PRIVATE_KEY)
+        const { uid } = jwt.verify(token, process.env.SECRET_PRIVATE_KEY);
 
         // User info
-        const user = await User.findById(uid)
+        const user = await User.findById(uid);
 
         // User doesn't exists
         if (!user) {
             return res.status(401).json({
                 ok: false,
-                msg: "User doesn't exists"
-            })
+                msg: "User doesn't exists",
+            });
         }
 
         // Verify uid.status = true
         if (!user.status) {
             return res.status(401).json({
                 ok: false,
-                msg: "Invalid Token"
-            })
+                msg: 'Invalid Token',
+            });
         }
 
-        req.user = user
+        req.user = user;
 
-        next()
+        return next();
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(401).json({
             ok: false,
-            msg: "Invalid Token"
-        })
+            msg: 'Invalid Token',
+        });
     }
 };
 
 module.exports = {
-    validateJWT
+    validateJWT,
 };

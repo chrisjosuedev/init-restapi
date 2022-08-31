@@ -1,12 +1,12 @@
-const { response, request } = require("express");
-const { ObjectId } = require("mongoose").Types;
+const { response, request } = require('express');
+const { ObjectId } = require('mongoose').Types;
 
-const { User, Product, Category } = require("../models");
+const { User, Product, Category } = require('../models');
 
-const allowedCollections = ["users", "categories", "products"];
+const allowedCollections = ['users', 'categories', 'products'];
 
 /** Search Users **/
-const searchUsers = async (term = "", res = response) => {
+const searchUsers = async (term = '', res = response) => {
     const isMongoID = ObjectId.isValid(term);
     if (isMongoID) {
         const user = await User.findById(term);
@@ -17,7 +17,7 @@ const searchUsers = async (term = "", res = response) => {
     }
 
     // Insensible Mayus / Minus
-    const regex = new RegExp(term, "i");
+    const regex = new RegExp(term, 'i');
 
     const user = await User.find({
         $or: [{ name: regex }, { email: regex }],
@@ -30,7 +30,7 @@ const searchUsers = async (term = "", res = response) => {
 };
 
 /** Search Category **/
-const searchCategory = async (term = "", res = response) => {
+const searchCategory = async (term = '', res = response) => {
     const isMongoID = ObjectId.isValid(term);
     if (isMongoID) {
         const category = await Category.findById(term);
@@ -41,9 +41,9 @@ const searchCategory = async (term = "", res = response) => {
     }
 
     // Insensible Mayus / Minus
-    const regex = new RegExp(term, "i");
+    const regex = new RegExp(term, 'i');
 
-    const category = await Category.find({ name: regex, status: true});
+    const category = await Category.find({ name: regex, status: true });
 
     res.status(200).json({
         results: category,
@@ -51,10 +51,13 @@ const searchCategory = async (term = "", res = response) => {
 };
 
 /** Search Product **/
-const searchProduct = async (term = "", res = response) => {
+const searchProduct = async (term = '', res = response) => {
     const isMongoID = ObjectId.isValid(term);
     if (isMongoID) {
-        const product = await Product.findById(term).populate("category", "name");
+        const product = await Product.findById(term).populate(
+            'category',
+            'name'
+        );
 
         return res.status(200).json({
             results: product ? [product] : [],
@@ -62,9 +65,12 @@ const searchProduct = async (term = "", res = response) => {
     }
 
     // Insensible Mayus / Minus
-    const regex = new RegExp(term, "i");
+    const regex = new RegExp(term, 'i');
 
-    const product = await Product.find({ name: regex, status: true}).populate("category", "name");
+    const product = await Product.find({ name: regex, status: true }).populate(
+        'category',
+        'name'
+    );
 
     res.status(200).json({
         results: product,
@@ -82,19 +88,19 @@ const search = (req = request, res = response) => {
     }
 
     switch (collection) {
-        case "users":
+        case 'users':
             searchUsers(term, res);
             break;
-        case "categories":
+        case 'categories':
             searchCategory(term, res);
             break;
-        case "products":
+        case 'products':
             searchProduct(term, res);
             break;
         default:
             res.status(500).json({
                 ok: false,
-                msg: "Search not available",
+                msg: 'Search not available',
             });
             break;
     }

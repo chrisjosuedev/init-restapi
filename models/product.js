@@ -1,9 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const ProductSchema = new Schema({
     name: {
         type: String,
-        required: [true, "name is required"],
+        required: [true, 'name is required'],
         unique: true,
     },
     status: {
@@ -12,7 +12,7 @@ const ProductSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         required: true,
     },
     unit_price: {
@@ -21,7 +21,7 @@ const ProductSchema = new Schema({
     },
     category: {
         type: Schema.Types.ObjectId,
-        ref: "Category",
+        ref: 'Category',
         require: true,
     },
     description: {
@@ -32,6 +32,9 @@ const ProductSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    img: {
+        type: String
+    }
 });
 
 ProductSchema.methods.toJSON = function () {
@@ -39,4 +42,4 @@ ProductSchema.methods.toJSON = function () {
     return product;
 };
 
-module.exports = model("Product", ProductSchema);
+module.exports = model('Product', ProductSchema);

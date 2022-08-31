@@ -1,5 +1,5 @@
-const { Router } = require("express");
-const { check, query } = require("express-validator");
+const { Router } = require('express');
+const { check, query } = require('express-validator');
 
 const router = Router();
 
@@ -9,27 +9,27 @@ const {
     postUsers,
     deleteUsers,
     patchUsers,
-} = require("../controllers/users.controller");
+} = require('../controllers/users.controller');
 
-const { 
+const {
     validateFields,
     validateJWT,
-    isAdminRole, verifyRole
-} = require('../middlewares')
+    isAdminRole,
+    verifyRole,
+} = require('../middlewares');
 
 const {
     isValidRole,
     isValidEmail,
     existsId,
-} = require("../helpers/db-validators");
-
+} = require('../helpers/db-validators');
 
 // GET -> Get Data
 router.get(
-    "/",
+    '/',
     [
-        query("limit", "limit has to be a number").isNumeric().optional(),
-        query("from", "from has to be a number").isNumeric().optional(),
+        query('limit', 'limit has to be a number').isNumeric().optional(),
+        query('from', 'from has to be a number').isNumeric().optional(),
         validateFields,
     ],
     getUsers
@@ -37,32 +37,32 @@ router.get(
 
 // PUT -> Modify Data
 router.put(
-    "/:id",
+    '/:id',
     [
-        check("id", "invalid id").isMongoId(),
-        check("id").custom(existsId),
-        check("role").custom(isValidRole),
+        check('id', 'invalid id').isMongoId(),
+        check('id').custom(existsId),
+        check('role').custom(isValidRole),
         validateFields,
     ],
     putUsers
 );
 
 // PATCH -> Partial Changes in Data
-router.patch("/", patchUsers);
+router.patch('/', patchUsers);
 
 // POST -> Insert Data
 router.post(
-    "/",
+    '/',
     [
-        check("name", "name is required").not().isEmpty(),
-        check("password", "password must have at least 6 characters").isLength({
+        check('name', 'name is required').not().isEmpty(),
+        check('password', 'password must have at least 6 characters').isLength({
             min: 6,
         }),
-        check("email", "email is invalid or is empty").isEmail(),
+        check('email', 'email is invalid or is empty').isEmail(),
         // Or -> email => isValidEmail(email)
-        check("email").custom(isValidEmail),
+        check('email').custom(isValidEmail),
         // Or -> role => isValidRole(role)
-        check("role").custom(isValidRole),
+        check('role').custom(isValidRole),
         validateFields,
     ],
     postUsers
@@ -70,13 +70,13 @@ router.post(
 
 // DELETE -> Delete Data
 router.delete(
-    "/:id",
+    '/:id',
     [
         validateJWT,
         // isAdminRole,
-        verifyRole("ADMIN_ROLE", "USER_ROLE"),
-        check("id", "invalid id").isMongoId(),
-        check("id").custom(existsId),
+        verifyRole('ADMIN_ROLE', 'USER_ROLE'),
+        check('id', 'invalid id').isMongoId(),
+        check('id').custom(existsId),
         validateFields,
     ],
     deleteUsers

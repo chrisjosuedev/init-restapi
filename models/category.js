@@ -1,9 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const CategorySchema = new Schema({
     name: {
         type: String,
-        required: [true, "name is required"],
+        required: [true, 'name is required'],
         unique: true,
     },
     status: {
@@ -12,14 +12,14 @@ const CategorySchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         required: true,
     },
 });
 
 CategorySchema.methods.toJSON = function () {
-    const { __v, status,...category } = this.toObject();
+    const { __v, status, ...category } = this.toObject();
     return category;
 };
 
-module.exports = model("Category", CategorySchema);
+module.exports = model('Category', CategorySchema);

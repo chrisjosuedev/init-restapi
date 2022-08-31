@@ -1,11 +1,9 @@
-const { request, response } = require("express");
-const bcryptjs = require("bcryptjs");
+const { request, response } = require('express');
+const bcryptjs = require('bcryptjs');
 
-const { User } = require("../models")
+const { User } = require('../models');
 
-const { generateJWT } = require("../helpers/generate-jwt");
-
-const { googleVerify } = require('../helpers/google-validate')
+const { generateJWT, googleVerify } = require('../helpers')
 
 const login = async (req = request, res = response) => {
     const { email, password } = req.body;
@@ -16,7 +14,7 @@ const login = async (req = request, res = response) => {
         if (!user) {
             return res.status(400).json({
                 ok: false,
-                msg: "Incorrect email or password",
+                msg: 'Incorrect email or password',
             });
         }
 
@@ -32,7 +30,7 @@ const login = async (req = request, res = response) => {
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: "Incorrect email or password",
+                msg: 'Incorrect email or password',
             });
         }
 
@@ -41,7 +39,7 @@ const login = async (req = request, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msg: "User logged",
+            msg: 'User logged',
             user,
             token,
         });
@@ -49,7 +47,7 @@ const login = async (req = request, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: "Login failed",
+            msg: 'Login failed',
             error,
         });
     }
@@ -59,30 +57,29 @@ const googleSingIn = async (req = request, res = response) => {
     const { id_token } = req.body;
 
     try {
+        const { name, img, email } = await googleVerify(id_token);
 
-        const { name, img, email } = await googleVerify(id_token)
-
-        let user = await User.findOne({ email })
+        let user = await User.findOne({ email });
 
         if (!user) {
             const data = {
                 name,
                 email,
-                password: "null",
+                password: 'null',
                 img,
-                role: "USER_ROLE",
+                role: 'USER_ROLE',
                 google: true,
-            }
+            };
 
-            user = new User(data)
-            await user.save()
+            user = new User(data);
+            await user.save();
         }
 
         // user with Status = false
         if (!user.status) {
             res.status(401).json({
                 ok: false,
-                msg: "User is disabled, contact with administrator"
+                msg: 'User is disabled, contact with administrator',
             });
         }
 
@@ -91,16 +88,15 @@ const googleSingIn = async (req = request, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msg: "User logged with Google",
+            msg: 'User logged with Google',
             user,
-            token
+            token,
         });
-
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({
             ok: false,
-            msg: "Login with Google failed",
+            msg: 'Login with Google failed',
             id_token,
         });
     }

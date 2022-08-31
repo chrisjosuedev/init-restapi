@@ -1,6 +1,6 @@
-const { request, response } = require("express");
+const { request, response } = require('express');
 
-const { Product } = require("../models");
+const { Product } = require('../models');
 
 const getProducts = async (req = request, res = response) => {
     const { limit, from } = req.query;
@@ -13,8 +13,8 @@ const getProducts = async (req = request, res = response) => {
     const [totalProducts, products] = await Promise.all([
         Product.countDocuments(query),
         Product.find(query)
-            .populate("user", "name")
-            .populate("category", "name")
+            .populate('user', 'name')
+            .populate('category', 'name')
             .skip(Number(from))
             .limit(Number(limit)),
     ]);
@@ -29,8 +29,8 @@ const getProduct = async (req = request, res = response) => {
     const { id } = req.params;
 
     const product = await Product.findById(id)
-        .populate("user", "name")
-        .populate("category", "name");
+        .populate('user', 'name')
+        .populate('category', 'name');
 
     res.status(200).json({
         product,
@@ -52,7 +52,7 @@ const postProduct = async (req = request, res = response) => {
 
     res.status(201).json({
         ok: true,
-        msg: "Product created successfully",
+        msg: 'Product created successfully',
         product,
     });
 };
@@ -71,7 +71,7 @@ const putProduct = async (req = request, res = response) => {
 
     res.status(200).json({
         ok: true,
-        msg: "Product updated successfully",
+        msg: 'Product updated successfully',
         product,
     });
 };
@@ -87,8 +87,8 @@ const deleteProduct = async (req = request, res = response) => {
 
     res.status(200).json({
         ok: true,
-        msg: "Product deleted successfully",
-        productDeleted: [ product ],
+        msg: 'Product deleted successfully',
+        productDeleted: [product],
     });
 };
 

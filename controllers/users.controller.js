@@ -1,7 +1,7 @@
-const { response, request } = require("express");
-const bcryptjs = require("bcryptjs");
+const { response, request } = require('express');
+const bcryptjs = require('bcryptjs');
 
-const { User } = require("../models")
+const { User } = require('../models');
 
 const getUsers = async (req = request, res = response) => {
     // params = /users?q=something&name=something&apikey=something
@@ -39,14 +39,14 @@ const putUsers = async (req = request, res = response) => {
 
     res.status(200).json({
         ok: true,
-        msg: "User was updated succesfully",
+        msg: 'User was updated succesfully',
         user,
     });
 };
 
 const patchUsers = (req = request, res = response) => {
     res.json({
-        msg: "patch API - Controller",
+        msg: 'patch API - Controller',
     });
 };
 
@@ -69,7 +69,7 @@ const postUsers = async (req = request, res = response) => {
 
     res.status(201).json({
         ok: true,
-        msg: "User was registered succesfully",
+        msg: 'User was registered succesfully',
         user,
     });
 };
@@ -77,11 +77,15 @@ const postUsers = async (req = request, res = response) => {
 const deleteUsers = async (req = request, res = response) => {
     const { id } = req.params;
 
-    const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
+    const user = await User.findByIdAndUpdate(
+        id,
+        { status: false },
+        { new: true }
+    );
 
     res.status(200).json({
-        msg: "User was deleted successfully",
-        userDeleted: [user]
+        msg: 'User was deleted successfully',
+        userDeleted: [user],
     });
 };
 
