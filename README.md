@@ -1,4 +1,4 @@
-# init-restapi
+# supercoffee-restapi
 Super Coffee RestAPI
 
 ## Documentation
