@@ -1,5 +1,5 @@
 # init-restapi
-Basic Rest API Template
+Super Coffee RestAPI
 
 ## Documentation
 
